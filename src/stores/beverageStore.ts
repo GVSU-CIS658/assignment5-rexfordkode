@@ -5,7 +5,7 @@ import {
   SyrupType,
   BeverageType,
 } from "../types/beverage";
-import tempretures from "../data/tempretures.json";
+import temperatures from "../data/tempretures.json";
 import db from "../firebase.ts";
 import {
   collection,
@@ -19,8 +19,8 @@ import {
 
 export const useBeverageStore = defineStore("BeverageStore", {
   state: () => ({
-    temps: tempretures,
-    currentTemp: tempretures[0],
+    temps: temperatures,
+    currentTemp: temperatures[0],
     bases: [] as BaseBeverageType[],
     currentBase: null as BaseBeverageType | null,
     syrups: [] as SyrupType[],
