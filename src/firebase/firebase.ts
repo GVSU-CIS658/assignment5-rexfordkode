@@ -1,4 +1,4 @@
-import {collection,getDocs,DocumentData, setDoc, doc, QuerySnapshot, QueryDocumentSnapshot, onSnapshot} from "firebase/firestore";
+import { collection, getDocs, DocumentData, QuerySnapshot, QueryDocumentSnapshot, onSnapshot } from "firebase/firestore";
 import { defineStore } from "pinia";
 import {
   BaseBeverageType,
@@ -8,7 +8,7 @@ import {
 } from "../types/beverage";
 import temperatures from "../data/tempretures.json";
 
-import {getAuth, signInAnonymously,signOut,GoogleAuthProvider, UserCredential, signInWithPopup} from "firebase/auth";
+import { GoogleAuthProvider, signOut, signInWithPopup, type UserCredential } from "firebase/auth";
 import db, { auth } from "../firebase";
 
 export const useBeverageStore = defineStore("BeverageStore", {
