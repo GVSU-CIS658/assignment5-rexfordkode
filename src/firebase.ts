@@ -1,5 +1,6 @@
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
+import { getAuth, signInAnonymously, signOut, GoogleAuthProvider, UserCredential, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
     // COPY this from your Firebase Console
@@ -13,5 +14,11 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
+export async function signInWithGoogle(): Promise<UserCredential> {
+    const provider = new GoogleAuthProvider();
+    return await signInWithPopup(auth, provider);
+}
 export default db;
+export { auth };
