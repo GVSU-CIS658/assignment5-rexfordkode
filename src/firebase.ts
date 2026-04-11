@@ -1,15 +1,21 @@
 import { getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInAnonymously, signOut, GoogleAuthProvider, UserCredential, signInWithPopup } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  type UserCredential,
+  signInWithPopup,
+} from "firebase/auth";
 
 const firebaseConfig = {
-    // COPY this from your Firebase Console
-    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  // COPY this from your Firebase Console
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -17,8 +23,8 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 export async function signInWithGoogle(): Promise<UserCredential> {
-    const provider = new GoogleAuthProvider();
-    return await signInWithPopup(auth, provider);
+  const provider = new GoogleAuthProvider();
+  return await signInWithPopup(auth, provider);
 }
 export default db;
 export { auth };
