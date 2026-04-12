@@ -15,7 +15,7 @@
     </Contents>
   </Mug>
 </template>
-<script setup lang="ts">
+<script lang="ts">
 import Contents from "./Contents.vue";
 import Mug from "./Mug.vue";
 import Syrup from "./Syrup.vue";
@@ -26,10 +26,26 @@ import Cold from "./Cold.vue";
 
 import { useBeverageStore } from "../stores/beverageStore";
 
-const beverageStore = useBeverageStore();
+export default {
+  components: {
+    Contents,
+    Mug,
+    Syrup,
+    Base,
+    Creamer,
+    Hot,
+    Cold,
+  },
+  props: {
+    isIced: {
+      type: Boolean,
+      required: true,
+    },
+  },
+  setup() {
+    const beverageStore = useBeverageStore();
 
-type Props = {
-  isIced: boolean;
+    return { beverageStore };
+  },
 };
-defineProps<Props>();
 </script>
