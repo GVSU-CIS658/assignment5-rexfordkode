@@ -41,13 +41,34 @@
         </template>
       </li>
     </ul>
+    <button v-if="!beverageStore.currentUser" :disabled="beverageStore.authBusy"
+      @click="beverageStore.signInWithGoogle()">
+      Sign in with Google
+    </button>
+    <p v-else>
+      Signed in as: {{ beverageStore.currentUser.displayName || beverageStore.currentUser.uid }}
+      <button :disabled="beverageStore.authBusy" @click="beverageStore.signOutUser()">Sign out</button>
+    </p>
+    <p v-if="beverageStore.successVisible">{{ beverageStore.successMessage }}</p>
     <input type="text" placeholder="Beverage Name" v-model="beverageStore.currentName" />
-    <button @click="beverageStore.makeBeverage()">🍺 Make Beverage</button>
+    <button :disabled="!beverageStore.currentUser" @click="beverageStore.makeBeverage()">
+      🍺 Make Beverage
+    </button>
     <section v-if="beverageStore.beverages.length">
-      <h2>My Beverages</h2>
-      <ul>
-        <li v-for="beverage in beverageStore.beverages" :key="beverage.id">
-          {{ beverage.name }} - {{ beverage.temp }}
+      <ul class="beverage-list">
+        <li v-for="beverage in beverageStore.beverages" :key="beverage.id" class="beverage-item">
+          <label class="beverage-option">
+            <input type="radio" name="beverage" :id="`r${beverage.id}`" :value="beverage"
+              v-model="beverageStore.currentBeverage" />
+            <span class="beverage-text">
+              <strong>{{ beverage.name }}</strong>
+              <span>{{ beverage.temp }}</span>
+            </span>
+          </label>
+          <button type="button" class="remove-button" aria-label="Remove beverage" title="Remove beverage"
+            @click="beverageStore.removeBeverage(beverage.id)">
+            ×
+          </button>
         </li>
       </ul>
     </section>
@@ -72,10 +93,61 @@ html {
   align-items: center;
   justify-content: center;
   height: 100%;
-  background: linear-gradient(to bottom, #6e4228 0%, #956f5a 100%);
+  background: linear-gradient(to bottom, #956f5a 0%, #6e4228 100%);
 }
 
 ul {
   list-style: none;
 }
+
+.beverage-list {
+  margin: 0;
+  padding: 0;
+}
+
+.beverage-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.beverage-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.beverage-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.remove-button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid #d6d6d6;
+  border-radius: 50%;
+  background: #fff;
+  color: hsl(0, 81%, 43%);
+  font-size: 14px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+input {
+  cursor: pointer;
+  border: 1px solid #d6d6d6;
+  padding: 0.2em;
+  margin: 5px 5px;
+  font-size: 200;
+}
 </style>
+6
