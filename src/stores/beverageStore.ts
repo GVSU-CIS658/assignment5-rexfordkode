@@ -9,6 +9,7 @@ import temperatures from "../data/tempretures.json";
 import db, { auth } from "../firebase.ts";
 import {
   collection,
+  deleteDoc,
   getDocs,
   setDoc,
   doc,
@@ -97,12 +98,22 @@ export const useBeverageStore = defineStore("BeverageStore", {
         }
         this.successTimeoutId = globalThis.setTimeout(() => {
           this.successVisible = false;
-          this.successMessage = "";
           this.successTimeoutId = null;
         }, 15000);
 
         this.currentName = "";
       }
+    },
+    async removeBeverage(beverageId: string) {
+      this.beverages = this.beverages.filter(
+        (beverage) => beverage.id !== beverageId,
+      );
+
+      if (this.currentBeverage?.id === beverageId) {
+        this.currentBeverage = this.beverages[0] ?? null;
+      }
+
+      await deleteDoc(doc(db, "beverages", beverageId));
     },
     async signInWithGoogle() {
       if (this.authBusy) {
