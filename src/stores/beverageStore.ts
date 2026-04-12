@@ -141,6 +141,17 @@ export const useBeverageStore = defineStore("BeverageStore", {
         this.currentUser = null;
         this.beverages = [];
         this.currentBeverage = null;
+        this.currentName = "";
+        this.successMessage = "";
+        this.successVisible = false;
+        if (this.successTimeoutId) {
+          globalThis.clearTimeout(this.successTimeoutId);
+          this.successTimeoutId = null;
+        }
+        this.currentTemp = temperatures[0];
+        this.currentBase = null;
+        this.currentSyrup = null;
+        this.currentCreamer = null;
         this.authBusy = false;
       }
     },
