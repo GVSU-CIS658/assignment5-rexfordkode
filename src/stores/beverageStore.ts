@@ -41,6 +41,7 @@ export const useBeverageStore = defineStore("BeverageStore", {
     currentName: "",
     currentUser: null as User | null,
     authBusy: false,
+    authMessage: "",
     successMessage: "",
     successVisible: false,
     successTimeoutId: null as ReturnType<typeof setTimeout> | null,
@@ -121,9 +122,19 @@ export const useBeverageStore = defineStore("BeverageStore", {
       }
 
       this.authBusy = true;
+      this.authMessage = "";
       const provider = new GoogleAuthProvider();
       try {
         await signInWithPopup(auth, provider);
+      } catch (error) {
+        if (
+          error instanceof Error &&
+          error.message.includes("auth/unauthorized-domain")
+        ) {
+          this.authMessage = "Google sign-in is not enabled for this site.";
+        } else {
+          this.authMessage = "Google sign-in failed. Please try again.";
+        }
       } finally {
         this.authBusy = false;
       }
@@ -152,6 +163,7 @@ export const useBeverageStore = defineStore("BeverageStore", {
         this.currentBase = null;
         this.currentSyrup = null;
         this.currentCreamer = null;
+        this.authMessage = "";
         this.authBusy = false;
       }
     },

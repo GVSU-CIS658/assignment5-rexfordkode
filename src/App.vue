@@ -49,6 +49,7 @@
       Signed in as: {{ beverageStore.currentUser.displayName || beverageStore.currentUser.uid }}
       <button :disabled="beverageStore.authBusy" @click="beverageStore.signOutUser()">Sign out</button>
     </p>
+    <p v-if="beverageStore.authMessage">{{ beverageStore.authMessage }}</p>
     <p v-if="beverageStore.successVisible">{{ beverageStore.successMessage }}</p>
     <input type="text" placeholder="Beverage Name" v-model="beverageStore.currentName" />
     <button :disabled="!beverageStore.currentUser" @click="beverageStore.makeBeverage()">
