@@ -1,14 +1,17 @@
 <template>
-  <div
-    class="syrup"
-    :style="{ '--texture-color': beverageStore.currentSyrup?.color }"
-  ></div>
+  <div class="syrup" :style="{ '--texture-color': beverageStore.currentSyrup?.color }"></div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { useBeverageStore } from "../stores/beverageStore";
 
-const beverageStore = useBeverageStore();
+export default {
+  setup() {
+    const beverageStore = useBeverageStore();
+
+    return { beverageStore };
+  },
+};
 </script>
 <style lang="scss" scoped>
 .syrup {
@@ -18,12 +21,10 @@ const beverageStore = useBeverageStore();
   height: 20%;
   animation: pour-tea 2s 1s forwards;
   z-index: 2;
-  background: repeating-linear-gradient(
-    45deg,
-    var(--texture-color),
-    var(--texture-color) 10px,
-    rgba(225, 207, 149, 1) 10px,
-    rgba(225, 207, 149, 1) 20px
-  );
+  background: repeating-linear-gradient(45deg,
+      var(--texture-color),
+      var(--texture-color) 10px,
+      rgba(225, 207, 149, 1) 10px,
+      rgba(225, 207, 149, 1) 20px);
 }
 </style>

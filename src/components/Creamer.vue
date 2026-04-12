@@ -1,17 +1,19 @@
 <template>
   <div class="froth">
-    <div
-      v-for=" in 5"
-      class="foam"
-      :style="{ backgroundColor: beverageStore.currentCreamer?.color }"
-    ></div>
+    <div v-for="n in 5" :key="n" class="foam" :style="{ backgroundColor: beverageStore.currentCreamer?.color }"></div>
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
 import { useBeverageStore } from "../stores/beverageStore";
 
-const beverageStore = useBeverageStore();
+export default {
+  setup() {
+    const beverageStore = useBeverageStore();
+
+    return { beverageStore };
+  },
+};
 </script>
 <style lang="scss" scoped>
 .froth {
@@ -23,6 +25,7 @@ const beverageStore = useBeverageStore();
   background-color: #c6c6c6;
   animation: pour-tea 2s 2s forwards;
 }
+
 .foam {
   display: block;
   background: #e4e0d2;
